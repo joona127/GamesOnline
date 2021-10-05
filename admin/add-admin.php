@@ -61,6 +61,69 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']); //Password Encryption with MD5
 
+    //SQL INJECTION
+    $full_name = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $full_name);
+    $full_name = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $full_name);
+    $full_name = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $full_name);
+    $full_name = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $full_name);
+    $full_name = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $full_name);
+    $full_name = str_replace('=', '', $full_name);
+    $full_name = str_replace('"', '', $full_name);
+    $full_name = str_replace(';', '', $full_name);
+    $full_name = str_replace("'", '', $full_name);
+    $full_name = str_replace('/', '', $full_name);
+    $full_name = str_replace('%', '', $full_name);
+    $full_name = str_replace('|', '', $full_name);
+    $full_name = str_replace('(', '', $full_name);
+    $full_name = str_replace(')', '', $full_name);
+    $full_name = str_replace('.', '', $full_name);
+
+    //XSS
+    $full_name = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $full_name);
+    $full_name = htmlspecialchars($full_name);
+
+    //SQL INJECTION
+    $username = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $username);
+    $username = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $username);
+    $username = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $username);
+    $username = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $username);
+    $username = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $username);
+    $username = str_replace('=', '', $username);
+    $username = str_replace('"', '', $username);
+    $username = str_replace(';', '', $username);
+    $username = str_replace("'", '', $username);
+    $username = str_replace('/', '', $username);
+    $username = str_replace('%', '', $username);
+    $username = str_replace('|', '', $username);
+    $username = str_replace('(', '', $username);
+    $username = str_replace(')', '', $username);
+    $username = str_replace('.', '', $username);
+
+    //XSS
+    $username = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $username);
+    $username = htmlspecialchars($username);
+
+    //SQL INJECTION
+    $password = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $password);
+    $password = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $password);
+    $password = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $password);
+    $password = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $password);
+    $password = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $password);
+    $password = str_replace('=', '', $password);
+    $password = str_replace('"', '', $password);
+    $password = str_replace(';', '', $password);
+    $password = str_replace("'", '', $password);
+    $password = str_replace('/', '', $password);
+    $password = str_replace('%', '', $password);
+    $password = str_replace('|', '', $password);
+    $password = str_replace('(', '', $password);
+    $password = str_replace(')', '', $password);
+    $password = str_replace('.', '', $password);
+
+    //XSS
+    $password = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $password);
+    $password = htmlspecialchars($password);
+
     //2. SQL Query to save data into the database
     $sql = "INSERT INTO tbl_admin SET
     full_name='$full_name',

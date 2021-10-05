@@ -46,10 +46,24 @@ include('partials/menu.php');
 
     <br><br><br>
 
+
+    <?php
+            $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
+            $res2 = mysqli_query($conn, $sql2);
+            if ($res2 == TRUE){
+              $rows2 = mysqli_fetch_assoc($res2);
+              $userType = $rows2['userType'];
+            }
+
+            if($userType == 1){
+              echo '<a href="add-admin.php" class="btn-primary">Add Admin</a>
+              <br />
+              <br />';
+            }
+    ?>
+
     <!-- Button to add Admin -->
-    <a href="add-admin.php" class="btn-primary">Add Admin</a>
-    <br />
-    <br />
+    
 
 
 
@@ -67,6 +81,15 @@ include('partials/menu.php');
       // Execute the query
       $res = mysqli_query($conn, $sql);
 
+      $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
+      $res2 = mysqli_query($conn, $sql2);
+      if ($res2 == TRUE){
+        $rows2 = mysqli_fetch_assoc($res2);
+        $userType = $rows2['userType'];
+      }
+
+
+
       // Check whether the query is executed or not
       if ($res == TRUE) {
         // Count rows to check whether we have data in database or not
@@ -77,9 +100,11 @@ include('partials/menu.php');
         if ($count > 0) {
           while ($rows = mysqli_fetch_assoc($res)) {
             // Using while loop to get all the data from database
-            $id = $rows['id'];
-            $full_name = $rows['full_name'];
-            $username = $rows['username'];
+            if($_SESSION['user'] == $rows['username']  || $userType == 1){
+              $id = $rows['id'];
+              $full_name = $rows['full_name'];
+              $username = $rows['username'];
+              //$username = $userType;
 
             // display the values in our table
       ?>
@@ -100,6 +125,9 @@ include('partials/menu.php');
 
 
       <?php
+
+            }
+            
 
           }
         } else {

@@ -54,11 +54,64 @@ include('../config/constants.php');
 if (isset($_POST['submit'])) {
     // Process for login
     // 1. Get the data from form
+
     $username = $_POST['username'];
-    $password = md5($_POST['password']);
+    $password = $_POST['password'];
+
+    //$username = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $username);
+    //$password = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $password);
+
+
+    //SQL INJECTION
+    $username = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $username);
+    $username = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $username);
+    $username = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $username);
+    $username = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $username);
+    $username = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $username);
+    $username = str_replace('=', '', $username);
+    $username = str_replace('"', '', $username);
+    $username = str_replace(';', '', $username);
+    $username = str_replace("'", '', $username);
+    $username = str_replace('/', '', $username);
+    $username = str_replace('%', '', $username);
+    $username = str_replace('|', '', $username);
+    $username = str_replace('(', '', $username);
+    $username = str_replace(')', '', $username);
+    $username = str_replace('.', '', $username);
+    
+    
+    $password = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $password);
+    $password = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $password);
+    $password = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $password);
+    $password = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $password);
+    $password = str_replace('=', '', $password);
+    $password = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $password);
+    $password = str_replace('"', '', $password);
+    $password = str_replace(';', '', $password);
+    $password = str_replace("'", '', $password);
+    $password = str_replace('/', '', $password);
+    $password = str_replace('%', '', $password);
+    $password = str_replace('|', '', $password);
+    $password = str_replace('(', '', $password);
+    $password = str_replace(')', '', $password);
+    $password = str_replace('.', '', $password);
+
+
+
+    //XSS
+    $username = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $username);
+    $password = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $password);
+    $username = htmlspecialchars($username);
+    $password = htmlspecialchars($password);
+
+    //CSRF
+
+
 
     // 2. SQL to check whether the user with username and
     // password exists or not
+    //echo $username;
+    //echo $password;
     $sql = "SELECT * FROM tbl_admin WHERE username = '$username' AND password = '$password'";
 
     // 3. Execute the query

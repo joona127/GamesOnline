@@ -11,7 +11,11 @@
             $id = $_GET['id'];
         }
 
+
+
         ?>
+
+        
 
         <form action="" method="POST">
             <table class="tbl-30">
@@ -62,6 +66,70 @@ if (isset($_POST['submit'])) {
     $current_password = md5($_POST['current_password']);
     $new_password = md5($_POST['new_password']);
     $confirm_password = md5($_POST['confirm_password']);
+
+    //SQL INJECTION
+    $current_password = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $current_password);
+    $current_password = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $current_password);
+    $current_password = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $current_password);
+    $current_password = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $current_password);
+    $current_password = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $current_password);
+    $current_password = str_replace('=', '', $current_password);
+    $current_password = str_replace('"', '', $current_password);
+    $current_password = str_replace(';', '', $current_password);
+    $current_password = str_replace("'", '', $current_password);
+    $current_password = str_replace('/', '', $current_password);
+    $current_password = str_replace('%', '', $current_password);
+    $current_password = str_replace('|', '', $current_password);
+    $current_password = str_replace('(', '', $current_password);
+    $current_password = str_replace(')', '', $current_password);
+    $current_password = str_replace('.', '', $current_password);
+
+    //XSS
+    $current_password = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $current_password);
+    $current_password = htmlspecialchars($current_password);
+
+    //SQL INJECTION
+    $new_password = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $new_password);
+    $new_password = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $new_password);
+    $new_password = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $new_password);
+    $new_password = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $new_password);
+    $new_password = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $new_password);
+    $new_password = str_replace('=', '', $new_password);
+    $new_password = str_replace('"', '', $new_password);
+    $new_password = str_replace(';', '', $new_password);
+    $new_password = str_replace("'", '', $new_password);
+    $new_password = str_replace('/', '', $new_password);
+    $new_password = str_replace('%', '', $new_password);
+    $new_password = str_replace('|', '', $new_password);
+    $new_password = str_replace('(', '', $new_password);
+    $new_password = str_replace(')', '', $new_password);
+    $new_password = str_replace('.', '', $new_password);
+
+    //XSS
+    $new_password = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $new_password);
+    $new_password = htmlspecialchars($new_password);
+
+    //SQL INJECTION
+    $confirm_password = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $confirm_password);
+    $confirm_password = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $confirm_password);
+    $confirm_password = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $confirm_password);
+    $confirm_password = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $confirm_password);
+    $confirm_password = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $confirm_password);
+    $confirm_password = str_replace('=', '', $confirm_password);
+    $confirm_password = str_replace('"', '', $confirm_password);
+    $confirm_password = str_replace(';', '', $confirm_password);
+    $confirm_password = str_replace("'", '', $confirm_password);
+    $confirm_password = str_replace('/', '', $confirm_password);
+    $confirm_password = str_replace('%', '', $confirm_password);
+    $confirm_password = str_replace('|', '', $confirm_password);
+    $confirm_password = str_replace('(', '', $confirm_password);
+    $confirm_password = str_replace(')', '', $confirm_password);
+    $confirm_password = str_replace('.', '', $confirm_password);
+
+    //XSS
+    $confirm_password = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $confirm_password);
+    $confirm_password = htmlspecialchars($confirm_password);
+
 
     // 2. Check whether the user with current ID and current password exists or not
     $sql = "SELECT * FROM tbl_admin WHERE id=$id AND 
