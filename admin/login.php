@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
     // 1. Get the data from form
 
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password']);
 
     //$username = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $username);
     //$password = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $password);
@@ -128,6 +128,7 @@ if (isset($_POST['submit'])) {
         header('location:' . SITEURL . 'admin/');
     } else {
         // User not available and login failed
+        sleep(5);
         $_SESSION['login'] = "<div class='error text-center'>Username or password is incorrect. Try again</div>";
         // Redirect to login.php
         header('location:' . SITEURL . 'admin/login.php');

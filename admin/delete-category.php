@@ -4,6 +4,9 @@ include('../config/constants.php');
 
 $id = $_GET['id'];
 
+if( stripos( $_SERVER[ 'HTTP_REFERER' ] ,$_SERVER[ 'SERVER_NAME' ]) !== false ){
+
+
 // Create Sql query to delete admin
 $sql = "DELETE FROM tbl_category WHERE id=$id";
 
@@ -16,6 +19,13 @@ if($res==TRUE)
     header('location:'.SITEURL.'admin/manage-category.php');
 }
 else
+{
+$_SESSION['delete-category'] = "<div class='error'>Failed to delete category</div>";
+header('location:'.SITEURL.'admin/manage-category.php');
+}
+
+
+}else
 {
 $_SESSION['delete-category'] = "<div class='error'>Failed to delete category</div>";
 header('location:'.SITEURL.'admin/manage-category.php');

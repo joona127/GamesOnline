@@ -161,11 +161,77 @@
             $category = $_POST['category'];
             $available = $_POST['available'];
 
+             //SQL INJECTION
+    $title = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $title);
+    $title = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $title);
+    $title = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $title);
+    $title = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $title);
+    $title = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $title);
+    $title = str_replace('=', '', $title);
+    $title = str_replace('"', '', $title);
+    $title = str_replace(';', '', $title);
+    $title = str_replace("'", '', $title);
+    $title = str_replace('/', '', $title);
+    $title = str_replace('%', '', $title);
+    $title = str_replace('|', '', $title);
+    $title = str_replace('(', '', $title);
+    $title = str_replace(')', '', $title);
+    $title = str_replace('.', '', $title);
+
+    //XSS
+    $title = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $title);
+    $title = htmlspecialchars($title);
+
+    //SQL INJECTION
+    $description = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $description);
+    $description = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $description);
+    $description = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $description);
+    $description = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $description);
+    $description = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $description);
+    $description = str_replace('=', '', $description);
+    $description = str_replace('"', '', $description);
+    $description = str_replace(';', '', $description);
+    $description = str_replace("'", '', $description);
+    $description = str_replace('/', '', $description);
+    $description = str_replace('%', '', $description);
+    $description = str_replace('|', '', $description);
+    $description = str_replace('(', '', $description);
+    $description = str_replace(')', '', $description);
+    $description = str_replace('.', '', $description);
+
+    //XSS
+    $description = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $description);
+    $description = htmlspecialchars($description);
+
+    //SQL INJECTION
+    $price = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $price);
+    $price = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $price);
+    $price = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $price);
+    $price = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $price);
+    $price = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $price);
+    $price = str_replace('=', '', $price);
+    $price = str_replace('"', '', $price);
+    $price = str_replace(';', '', $price);
+    $price = str_replace("'", '', $price);
+    $price = str_replace('/', '', $price);
+    $price = str_replace('%', '', $price);
+    $price = str_replace('|', '', $price);
+    $price = str_replace('(', '', $price);
+    $price = str_replace(')', '', $price);
+    $price = str_replace('.', '', $price);
+
+    //XSS
+    $price = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $price);
+    $price = htmlspecialchars($price);
+
 
             // Updating the new image if selected
 
             if (isset($_FILES['image']['name'])) {
                 $image_name = $_FILES['image']['name'];
+                $uploaded_name = $_FILES[ 'image' ][ 'name' ];
+                $uploaded_type = $_FILES[ 'image' ][ 'type' ];
+                $uploaded_size = $_FILES[ 'image' ][ 'size' ];
 
                 if ($image_name != "") {
                     // Upload the new image and remove the current image
@@ -179,7 +245,11 @@
                     $destination_path = "../images/games/" . $image_name;
 
                     // Finally upload the image
-                    $upload = move_uploaded_file($source_path, $destination_path);
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 1000 ) ){
+                        $upload = move_uploaded_file($source_path, $destination_path);
+                    }else{
+                        $upload=false;
+                    }
 
                     // Check whether the image is uploaded or not
                     if ($upload == false) {

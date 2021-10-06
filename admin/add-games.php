@@ -115,6 +115,69 @@
             $price = $_POST['price'];
             $category = $_POST['category'];
 
+    //SQL INJECTION
+    $title = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $title);
+    $title = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $title);
+    $title = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $title);
+    $title = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $title);
+    $title = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $title);
+    $title = str_replace('=', '', $title);
+    $title = str_replace('"', '', $title);
+    $title = str_replace(';', '', $title);
+    $title = str_replace("'", '', $title);
+    $title = str_replace('/', '', $title);
+    $title = str_replace('%', '', $title);
+    $title = str_replace('|', '', $title);
+    $title = str_replace('(', '', $title);
+    $title = str_replace(')', '', $title);
+    $title = str_replace('.', '', $title);
+
+    //XSS
+    $title = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $title);
+    $title = htmlspecialchars($title);
+
+    //SQL INJECTION
+    $description = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $description);
+    $description = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $description);
+    $description = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $description);
+    $description = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $description);
+    $description = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $description);
+    $description = str_replace('=', '', $description);
+    $description = str_replace('"', '', $description);
+    $description = str_replace(';', '', $description);
+    $description = str_replace("'", '', $description);
+    $description = str_replace('/', '', $description);
+    $description = str_replace('%', '', $description);
+    $description = str_replace('|', '', $description);
+    $description = str_replace('(', '', $description);
+    $description = str_replace(')', '', $description);
+    $description = str_replace('.', '', $description);
+
+    //XSS
+    $description = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $description);
+    $description = htmlspecialchars($description);
+
+    //SQL INJECTION
+    $price = preg_replace('/s(.*)e(.*)l(.*)e(.*)c(.*)t(.*)/i', '', $price);
+    $price = preg_replace('/d(.*)e(.*)l(.*)e(.*)t(.*)e(.*)/i', '', $price);
+    $price = preg_replace('/u(.*)p(.*)d(.*)a(.*)t(.*)e(.*)/i', '', $price);
+    $price = preg_replace('/u(.*)n(.*)i(.*)o(.*)n(.*)/i', '', $price);
+    $price = preg_replace('/u(.*)n(.*)h(.*)e(.*)x(.*)/i', '', $price);
+    $price = str_replace('=', '', $price);
+    $price = str_replace('"', '', $price);
+    $price = str_replace(';', '', $price);
+    $price = str_replace("'", '', $price);
+    $price = str_replace('/', '', $price);
+    $price = str_replace('%', '', $price);
+    $price = str_replace('|', '', $price);
+    $price = str_replace('(', '', $price);
+    $price = str_replace(')', '', $price);
+    $price = str_replace('.', '', $price);
+
+    //XSS
+    $price = preg_replace('/<(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t(.*)/i', '', $price);
+    $price = htmlspecialchars($price);
+
             // Check whether radio button for featured and active are checked or not
             if (isset($_POST['available'])) {
                 $available = $_POST['available'];
@@ -129,6 +192,10 @@
             if (isset($_FILES['image']['name'])) {
                 // Get the details of the selected image
                 $image_name = $_FILES['image']['name'];
+                $uploaded_name = $_FILES[ 'image' ][ 'name' ];
+                $uploaded_type = $_FILES[ 'image' ][ 'type' ];
+                $uploaded_size = $_FILES[ 'image' ][ 'size' ];
+
 
                 if ($image_name != "") {
                     // Image is selected
@@ -143,8 +210,13 @@
                     // Destination path for the image
                     $destination = "../images/games/" . $image_name;
 
-                    $upload = move_uploaded_file($src, $destination);
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 1000 ) ){
+                        $upload = move_uploaded_file($src, $destination);
+                    }else{
+                        $upload=false;
+                    }
 
+                    
                     if ($upload == false) {
                         // Failed to upload the image
                         $_SESSION['upload'] = "<div class='error'>Failed to upload the image.</div>";

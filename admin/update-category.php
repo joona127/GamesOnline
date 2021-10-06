@@ -101,7 +101,7 @@
             // Get all the values from the form
             $id = $_POST['id'];
             $title = $_POST['title'];
-            $current_image = $_POST['image_name'];
+            //$current_image = $_POST['image_name'];
             $available = $_POST['available'];
 
 
@@ -109,6 +109,9 @@
 
             if (isset($_FILES['image']['name'])) {
                 $image_name = $_FILES['image']['name'];
+                $uploaded_name = $_FILES[ 'image' ][ 'name' ];
+                $uploaded_type = $_FILES[ 'image' ][ 'type' ];
+                $uploaded_size = $_FILES[ 'image' ][ 'size' ];
 
                 if ($image_name != "") {
                     // Upload the new image and remove the current image
@@ -122,7 +125,11 @@
                     $destination_path = "../images/category/" . $image_name;
 
                     // Finally upload the image
-                    $upload = move_uploaded_file($source_path, $destination_path);
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 2000 ) ){
+                        $upload = move_uploaded_file($source_path, $destination_path);
+                    }else{
+                        $upload=false;
+                    }
 
                     // Check whether the image is uploaded or not
                     if ($upload == false) {

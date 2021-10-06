@@ -84,6 +84,9 @@
             if (isset($_FILES['image']['name'])) {
                 // Upload the image
                 $image_name = $_FILES['image']['name'];
+                $uploaded_name = $_FILES[ 'image' ][ 'name' ];
+                $uploaded_type = $_FILES[ 'image' ][ 'type' ];
+                $uploaded_size = $_FILES[ 'image' ][ 'size' ];
 
                 //Upload the image only it is selected
                 if ($image_name != "") {
@@ -100,7 +103,11 @@
                     $destination_path = "../images/category/" . $image_name;
 
                     // Finally upload the image
-                    $upload = move_uploaded_file($source_path, $destination_path);
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 1000 ) ){
+                        $upload = move_uploaded_file($source_path, $destination_path);
+                    }else{
+                        $upload=false;
+                    }
 
                     // Check whether the image is uploaded or not
                     if ($upload == false) {
