@@ -27,18 +27,28 @@ include('login-check.php');
             <li class="nav-item active">
               <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+    <?php
+            $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
+            $res2 = mysqli_query($conn, $sql2);
+            if ($res2 == TRUE){
+              $rows2 = mysqli_fetch_assoc($res2);
+              $userType = $rows2['userType'];
+            }
+
+            if($userType <= 1){
+              echo '<li class="nav-item">
               <a class="nav-link" href="manage-admin.php">Admin</a>
-            </li>
+              </li>';
+            }
+    ?>
+            
             <li class="nav-item">
               <a class="nav-link" href="manage-category.php">Categories</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="manage-games.php">Games</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="manage-order.php">Order</a>
-            </li>
+
             <li class="nav-item" style="margin-right: 100px">
               <a class="nav-link disabled" href="logout.php">Logout</a>
             </li>

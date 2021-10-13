@@ -104,9 +104,6 @@ if (isset($_POST['submit'])) {
     $username = htmlspecialchars($username);
     $password = htmlspecialchars($password);
 
-    //CSRF
-
-
 
     // 2. SQL to check whether the user with username and
     // password exists or not

@@ -1,5 +1,19 @@
 <?php include('partials/menu.php'); ?>
 
+<?php
+            $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
+            $res2 = mysqli_query($conn, $sql2);
+            if ($res2 == TRUE){
+              $rows2 = mysqli_fetch_assoc($res2);
+              $userType = $rows2['userType'];
+            }
+
+            if($userType > 1){
+              header('location:'.SITEURL.'logout.php');;
+            }
+    ?>
+
+
 <div id="main-content">
     <div class="wrapper">
         <h1>Add games</h1>
@@ -220,7 +234,7 @@
                     if ($upload == false) {
                         // Failed to upload the image
                         $_SESSION['upload'] = "<div class='error'>Failed to upload the image.</div>";
-                        header('location:' . SITEURL . 'admin/add-food.php');
+                        header('location:' . SITEURL . 'admin/add-games.php');
                         die(); // Stop the process
                     }
                 }

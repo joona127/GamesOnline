@@ -5,6 +5,18 @@
 $id = $_GET['id'];
 
 
+            $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
+            $res2 = mysqli_query($conn, $sql2);
+            if ($res2 == TRUE){
+              $rows2 = mysqli_fetch_assoc($res2);
+              $userType = $rows2['userType'];
+            }
+
+            if($userType > 0){
+              header('location:'.SITEURL.'logout.php');;
+            }
+
+
 
 if( stripos( $_SERVER[ 'HTTP_REFERER' ] ,$_SERVER[ 'SERVER_NAME' ]) !== false ){
 

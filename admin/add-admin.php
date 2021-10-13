@@ -1,5 +1,18 @@
 <?php include('partials/menu.php'); ?>
 
+<?php
+            $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
+            $res2 = mysqli_query($conn, $sql2);
+            if ($res2 == TRUE){
+              $rows2 = mysqli_fetch_assoc($res2);
+              $userType = $rows2['userType'];
+            }
+
+            if($userType > 0){
+              header('location:'.SITEURL.'logout.php');;
+            }
+    ?>
+
 <div id="main-content">
     <div class="wrapper">
         <h1>Add Admin</h1>
@@ -128,7 +141,8 @@ if (isset($_POST['submit'])) {
     $sql = "INSERT INTO tbl_admin SET
     full_name='$full_name',
     username='$username',
-    password='$password'
+    password='$password',
+    userType=1
     ";
 
     // 3. Execute query and save data in database
@@ -136,6 +150,8 @@ if (isset($_POST['submit'])) {
 
     // 4. Check whether the data is inserted or not and
     // display appropriate message
+
+
 
     if ($res == TRUE) {
         // echo "Data inserted";
