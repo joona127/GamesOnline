@@ -88,8 +88,8 @@ include('partials/menu.php');
             }
 
             if($userType <= 1){
-              echo '<a href="<?php echo SITEURL; ?>admin/update-games.php?id=<?php echo $id; ?>" class="btn-secondary">Update Game</a>
-              <a href="<?php echo SITEURL; ?>admin/delete-games.php?id=<?php echo $id; ?>" class="btn-danger">Delete Game</a>';
+              echo "<a href='update-games.php?id=".$id."' class='btn-secondary'>Update Games</a>
+              <a href='delete-games.php?id=".$id."' class='btn-danger'>Delete Games</a>";
             }
     ?>
               

@@ -112,11 +112,11 @@ include('partials/menu.php');
             }
 
             if($userType <= 1){
-              echo '<a href="<?php echo SITEURL; ?>admin/update-category.php?id=<?php echo $id; ?>" class="btn-secondary">Update Category</a>
-                <a href="<?php echo SITEURL; ?>admin/delete-category.php?id=<?php echo $id; ?>" class="btn-danger">Delete Category</a>';
+              echo "<a href='update-category.php?id=".$id."' class='btn-secondary'>Update Category</a>
+              <a href='delete-category.php?id=".$id."' class='btn-danger'>Delete Category</a>";
             }
-    ?>
-                
+            
+    ?>            
               </td>
             </tr>
 

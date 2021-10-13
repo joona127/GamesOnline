@@ -10,8 +10,8 @@ include('partials/menu.php');
               $userType = $rows2['userType'];
             }
 
-            if($userType >= 1){
-              header('location:'.SITEURL.'logout.php');;
+            if($userType > 1){
+              header('location:'.SITEURL.'admin/logout.php');;
             }
     ?>
 
@@ -67,7 +67,7 @@ include('partials/menu.php');
               $userType = $rows2['userType'];
             }
 
-            if($userType <= 1){
+            if($userType < 1){
               echo '<a href="add-admin.php" class="btn-primary">Add Admin</a>
               <br />
               <br />';
@@ -112,7 +112,7 @@ include('partials/menu.php');
         if ($count > 0) {
           while ($rows = mysqli_fetch_assoc($res)) {
             // Using while loop to get all the data from database
-            if($_SESSION['user'] == $rows['username']  || $userType == 1){
+            if($_SESSION['user'] == $rows['username']  || $userType == 0){
               $id = $rows['id'];
               $full_name = $rows['full_name'];
               $username = $rows['username'];

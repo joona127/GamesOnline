@@ -9,7 +9,7 @@
             }
 
             if($userType > 0){
-              header('location:'.SITEURL.'logout.php');;
+              header('location:'.SITEURL.'admin/logout.php');;
             }
     ?>
 
