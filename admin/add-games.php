@@ -1,6 +1,8 @@
 <?php include('partials/menu.php'); ?>
 
-
+<?php
+ob_start();
+?>
 
 
 <div id="main-content">
@@ -213,7 +215,7 @@
                     // Destination path for the image
                     $destination = "../images/games/" . $image_name;
 
-                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 1000 ) ){
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" || $uploaded_type == "image/jpg" ) && ( $uploaded_size < 1000000 ) ){
                         $upload = move_uploaded_file($src, $destination);
                     }else{
                         $upload=false;

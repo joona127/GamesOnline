@@ -1,6 +1,9 @@
+
+
 <?php include('partials/menu.php'); ?>
 
 <?php
+ob_start();
             $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
             $res2 = mysqli_query($conn, $sql2);
             if ($res2 == TRUE){
@@ -257,7 +260,7 @@
                     $destination_path = "../images/games/" . $image_name;
 
                     // Finally upload the image
-                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 1000 ) ){
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" || $uploaded_type == "image/jpg") && ( $uploaded_size < 1000000 ) ){
                         $upload = move_uploaded_file($source_path, $destination_path);
                     }else{
                         $upload=false;
@@ -309,7 +312,7 @@
             if ($res3 == true) {
                 // Category updated
                 $_SESSION['update'] = "<div class='success'>Game updated successfully!</div>";
-                header('location:' . SITEURL . 'admin/manage-games.php');
+                header('location:'.SITEURL.'admin/manage-games.php');
             } else {
                 $_SESSION['update'] = "<div class='error'>Failed to update game</div>";
                 header('location:' . SITEURL . 'admin/manage-games.php');

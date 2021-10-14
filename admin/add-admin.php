@@ -1,6 +1,7 @@
 <?php include('partials/menu.php'); ?>
 
 <?php
+ob_start();
             $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
             $res2 = mysqli_query($conn, $sql2);
             if ($res2 == TRUE){

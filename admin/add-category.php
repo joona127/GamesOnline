@@ -2,7 +2,9 @@
 
 ?>
 
-
+<?php 
+ob_start();
+?>
 
 
 <div id="main-content">
@@ -105,7 +107,7 @@
                     $destination_path = "../images/category/" . $image_name;
 
                     // Finally upload the image
-                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 1000 ) ){
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" || $uploaded_type == "image/jpg") && ( $uploaded_size < 1000000 ) ){
                         $upload = move_uploaded_file($source_path, $destination_path);
                     }else{
                         $upload=false;

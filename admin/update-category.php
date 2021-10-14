@@ -1,6 +1,7 @@
 <?php include('partials/menu.php'); ?>
 
 <?php
+ob_start();
             $sql2 = "SELECT * FROM tbl_admin WHERE username='".$_SESSION['user']."'";
             $res2 = mysqli_query($conn, $sql2);
             if ($res2 == TRUE){
@@ -139,7 +140,7 @@
                     $destination_path = "../images/category/" . $image_name;
 
                     // Finally upload the image
-                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" ) && ( $uploaded_size < 2000 ) ){
+                    if( ( $uploaded_type == "image/jpeg" || $uploaded_type == "image/png" || $uploaded_type == "image/jpg" ) && ( $uploaded_size < 1000000 ) ){
                         $upload = move_uploaded_file($source_path, $destination_path);
                     }else{
                         $upload=false;
